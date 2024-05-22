@@ -46,14 +46,14 @@ export default function SignUp() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const user = {
-      firstName: data.get('firstName'),
-      lastName: data.get('lastName'),
+      first_name: data.get('firstName'),
+      last_name: data.get('lastName'),
       email: data.get('email'),
       password: data.get('password'),
     };
 
     try {
-      await axiosInstance.post('/signup', user);
+      await axiosInstance.post('api/users/signup/', user);
       toast.success('Sign up successful! Redirecting to login page...');
       setTimeout(() => {
         navigate('/login');
