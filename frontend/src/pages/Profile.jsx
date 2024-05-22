@@ -28,6 +28,10 @@ const Profile = () => {
   }, [authState.isAuthenticated, fetchUserTickets, navigate]);
 
   const handleRefund = async (ticketId) => {
+    if (!uid) {
+      console.error("User ID is undefined");
+      return;  // ID가 정의되지 않았을 경우 함수 실행 중지
+    }
     try {
       await axiosInstance.post(`/tickets/${ticketId}/refund`, null, {
         headers: {
@@ -44,16 +48,17 @@ const Profile = () => {
     }
   };
 
-  const uid = authState.user;
-
+  const uid = authState.user.id;
+  
   const handleDeleteAccount = async () => {
+
     try {
-      const response = await axiosInstance.delete(`/delete/${uid}`, {
+      const response = await axiosInstance.delete(`/api/users/delete/${uid}/`, {
         headers: {
           Authorization: `Bearer ${authState.token}`,
         },
       });
-
+        
       if (response.status === 200) {
         toast.success('회원탈퇴가 완료되었습니다.');
         logout();

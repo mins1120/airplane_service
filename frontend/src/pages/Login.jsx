@@ -53,7 +53,7 @@ export default function Login() {
     };
 
     try {
-      const response = await axiosInstance.post('/login', credentials);
+      const response = await axiosInstance.post('api/users/login/', credentials);
       const { token, user } = response.data;
       login(user, token);
       toast.success('로그인 성공!');
